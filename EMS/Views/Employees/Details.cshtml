@@ -1,0 +1,147 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<br />
+<div>
+    <div class="d-flex bd-highlight">
+        <div class="p-2 flex-grow-1 bd-highlight">
+            <h4 style="color: #005c00 "><i class="fas fa-user"></i> Employee Details</h4>
+        </div>
+        <div class="p-1 bd-highlight">
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.EmployeeID"><i class="fas fa-user-edit"></i></a>
+        </div>
+        <div class="p-1 bd-highlight">
+            <a class="btn btn-dark" asp-action="Index"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+    </div>
+
+    <hr />
+    <h5 style="text-align: center; color:black"><i class="far fa-user"></i> Basic Info</h5>
+    <hr/>
+    <br />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Department.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfJoining)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateOfJoining)
+        </dd>
+    </dl>
+    <hr/>
+    <h5 style="text-align: center; color:black"><i class="far fa-user"></i> Address</h5>
+    <hr/>
+    <br />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.HouseName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.HouseName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.HouseNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.HouseNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.RoadNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.RoadNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.WardNo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.WardNo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.City)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.City)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.Country)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.Country)
+        </dd>
+    </dl>
+    <br />
+    <hr/>
+    <h5 style="text-align: center; color:black"><i class="far fa-user"></i> Educations</h5>
+    <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Degree
+                </th>
+                <th>
+                    Institution
+                </th>
+                <th>
+                    Passing Year
+                </th>
+                <th>
+                    GPA
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Educations)
+            {
+                <tr>
+                    <td>
+                        @item.Degree.Name
+                    </td>
+                    <td>
+                        @item.Institution
+                    </td>
+                    <td>
+                        @item.PassingYear
+                    </td>
+                    <td>
+                        @item.GPA
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

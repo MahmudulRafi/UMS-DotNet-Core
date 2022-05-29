@@ -1,0 +1,198 @@
+﻿@model Employee
+
+@{
+    //ViewData["Title"] = "Edit Employee";
+}
+<br />
+<h4 style="color: #005c00 "><i class="fas fa-user"></i> Update Employee</h4>
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <br />
+        <h5 style="text-align: center; color:black"><i class="far fa-file-alt"></i> Basic Info</h5>
+        <br />
+        <div class="row">
+            <input hidden asp-for="EmployeeID" value="@Model.EmployeeID" />
+            <div class="col-md-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" value="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" value="@Model.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" value="@Model.Phone" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" value="@Model.DateOfBirth.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <label asp-for="DateOfJoining" class="control-label"></label>
+                <input asp-for="DateOfJoining" class="form-control" type="date" value="@Model.DateOfJoining.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Department" class="control-label"></label>
+                <select asp-for="DepartmentID" asp-items="ViewBag.departments" class="form-control"></select>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <h5 style="text-align: center; color:black"><i class="far fa-file-alt"></i> Address</h5>
+        <br />
+        <div class="row">
+            <input hidden asp-for="Address.AddressID" />
+            <div class="col-md-3">
+                <label asp-for="Address.HouseName" class="control-label"></label>
+                <input asp-for="Address.HouseName" class="form-control" />
+                <span asp-validation-for="Address.HouseName" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Address.HouseNo" class="control-label"></label>
+                <input asp-for="Address.HouseNo" class="form-control" />
+                <span asp-validation-for="Address.HouseNo" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Address.RoadNo" class="control-label"></label>
+                <input asp-for="Address.RoadNo" class="form-control" />
+                <span asp-validation-for="Address.RoadNo" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Address.WardNo" class="control-label"></label>
+                <input asp-for="Address.WardNo" class="form-control" />
+                <span asp-validation-for="Address.WardNo" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <label asp-for="Address.City" class="control-label"></label>
+                <input asp-for="Address.City" class="form-control" />
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Address.Country" class="control-label"></label>
+                <input asp-for="Address.Country" class="form-control" />
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+
+        <br />
+        <h5 style="text-align: center; color:black "><i class="far fa-file-alt"></i> Educational Info</h5>
+        <br />
+
+        <table id="educationTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Degree
+                    </th>
+                    <th>
+                        Institution
+                    </th>
+                    <th>
+                        Passing Year
+                    </th>
+                    <th>
+                        GPA/CGPA
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < Model.Educations.Count; i++)
+                {
+                    @Html.HiddenFor(x => x.Educations[i].EducationID)
+                    <tr>
+                        <td>
+                            @Html.DropDownListFor(x => x.Educations[i].DegreeID, ViewBag.degrees as SelectList, new { @class = "form-control" })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.Educations[i].Institution, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.Educations[i].PassingYear, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(x => x.Educations[i].GPA, new { htmlAttributes = new { @class = "form-control" } })
+                        </td>
+                        <td>
+                            <button id="buttonRemove-@i" type="button" class="btn btn-danger visible" onclick="DeleteItem(this)" style="left:90%; position:absolute"><i class="fas fa-times"></i></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <input type="hidden" id="hiddenLastIndex" value="0" />
+
+        <div class="d-flex bd-highlight">
+            <div class="p-2 flex-grow-1 bd-highlight"></div>
+            <div class="p-1 bd-highlight">
+                <input type="submit" value="Update" class="btn btn-warning" />
+            </div>
+            <div class="p-1 bd-highlight">
+                <a class="btn btn-dark" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+@section Scripts{
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        function DeleteItem(button) {
+            $(button).closest('tr').remove();
+        }
+
+        function AddItem(button) {
+
+            var table = document.getElementById('educationTable');
+            var rows = table.getElementsByTagName('tr');
+
+            var rowOuterHtml = rows[rows.length - 1].outerHTML;
+            var lastRowIdx = document.getElementById('hiddenLastIndex').value;
+            var nextRowIdx = eval(lastRowIdx) + 1;
+
+            document.getElementById('hiddenLastIndex').value = nextRowIdx;
+
+            rowOuterHtml = rowOuterHtml.replaceAll('_' + lastRowIdx + '_', '_' + nextRowIdx + '_');
+            rowOuterHtml = rowOuterHtml.replaceAll('[' + lastRowIdx + ']', '[' + nextRowIdx + ']');
+            rowOuterHtml = rowOuterHtml.replaceAll('-' + lastRowIdx, '-' + nextRowIdx);
+
+            var newRow = table.insertRow();
+            newRow.innerHTML = rowOuterHtml;
+
+            var buttonAddID = button.id;
+            var buttonDeleteID = buttonAddID.replaceAll('buttonAdd', 'buttonRemove');
+
+            var deleteButton = document.getElementById(buttonDeleteID);
+            deleteButton.classList.add("visible");
+            deleteButton.classList.remove("invisible");
+
+            var addButton = document.getElementById(buttonAddID);
+            addButton.classList.remove("visible");
+            addButton.classList.add("invisible");
+
+        }
+
+    </script>
+
+}

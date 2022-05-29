@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Employee>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
+
+<div class="d-flex bd-highlight">
+    <div class="p-1 w-75 bd-highlight">
+        <h4>
+            Employees
+        </h4>
+    </div>
+    <div class="p-1 flex-shrink-1 bd-highlight">
+        <a class="btn btn-success" asp-action="Create"><i class="fas fa-plus"></i> Add New</a>
+    </div>
+</div>
+
+<br />
+<table class="table" id="myTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayName("Date Of Joining")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfJoining.Date)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.EmployeeID"><i class="fas fa-user-edit"></i></a>
+                <a class="btn btn-dark" asp-action="Details" asp-route-id="@item.EmployeeID"><i class="fas fa-info-circle"></i></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.EmployeeID"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts  {
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+            });
+        })
+    </script>
+}
